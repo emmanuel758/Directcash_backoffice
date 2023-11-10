@@ -70,14 +70,16 @@ export class AddSuperAgentStepOneComponent implements OnInit {
       "superMerchant": `${this.myForm1.value.superMerchant}`,
       "imei": this.myForm.value.imei,
       "id": "",
-      "adminId": localStorage.getItem('id'),
+      "adminId": `${this.myForm1.value.superMerchant}`,
       "contribuable": this.myForm1.value.contribuable,
       "OperateurMarketing": this.myForm1.value.OperateurMarketing,
       "region": this.myForm.value.region,
       "phoneContact": this.myForm1.value.phoneContact,
       "cniContact": this.myForm1.value.cniContact,
       "creerPar": localStorage.getItem('id'),
-      "creerLe": ""
+      "creerLe": "",
+      "EmergencyContact": this.myForm1.value.phoneContact,
+      "EmergencyCni": this.myForm1.value.cniContact,
 
     };
 

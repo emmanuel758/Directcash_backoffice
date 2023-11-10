@@ -95,27 +95,29 @@
     <table mat-table [dataSource]="dataSource">
       <!-- Nom Column -->
       <ng-container matColumnDef="Nom">
-        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <th mat-header-cell *matHeaderCellDef>Noms</th>
         <td mat-cell *matCellDef="let element">{{ element.merchantName }}</td>
       </ng-container>
 
       <!-- Solde Column -->
       <ng-container matColumnDef="Solde">
-        <th mat-header-cell *matHeaderCellDef>Solde</th>
+        <th mat-header-cell *matHeaderCellDef>Solde (XAF)</th>
         <td mat-cell *matCellDef="let element">{{ element.balance }}</td>
       </ng-container>
-
-      <!-- Agence Column -->
-      <ng-container matColumnDef="Agence">
-        <th mat-header-cell *matHeaderCellDef>Agence</th>
-        <td mat-cell *matCellDef="let element"></td>
-      </ng-container>
+ <!-- MerchantName Column -->
+ <ng-container matColumnDef="banque">
+  <th mat-header-cell *matHeaderCellDef>Banque</th>
+  <td mat-cell *matCellDef="let element"></td>
+</ng-container>
+   
 
       <!-- MerchantName Column -->
       <ng-container matColumnDef="MerchantName">
-        <th mat-header-cell *matHeaderCellDef>MerchantName</th>
-        <td mat-cell *matCellDef="let element">{{ element.superMerchant }}</td>
+        <th mat-header-cell *matHeaderCellDef>Merchant</th>
+        <td mat-cell *matCellDef="let element">{{ element.creerPar }}</td>
       </ng-container>
+
+      
 
       <!-- Imei Column -->
       <ng-container matColumnDef="N° IMEI">

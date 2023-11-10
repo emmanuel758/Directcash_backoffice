@@ -13,7 +13,7 @@ export class TopAgentsComponent {
 
   constructor(public dialog: MatDialog) { }
 
-  displayedColumns: string[] = ['Nom', 'Email', 'Téléphone', 'Région', 'Date de création', 'Actions'];
+  displayedColumns: string[] = ['Nom', 'Email', 'Téléphone', 'Région','Date de création', 'Actions'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
