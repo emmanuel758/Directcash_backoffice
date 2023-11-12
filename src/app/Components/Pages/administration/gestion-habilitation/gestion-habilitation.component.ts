@@ -61,7 +61,11 @@ export class GestionHabilitationComponent implements OnInit {
     alert?.classList.remove("d-none");
   }
 
-  editer_habilitation(mode: string, data: any) {
+  /**
+   * Modal de gestion d'une habilitation
+   * Add - Edit - Show
+   */
+  open_habilitation_modal(mode: string, data: any) {
     const habilitation_dialog = this.dialog.open(HabilitationDialogComponent, {
       data: {
         mode: mode,
@@ -70,12 +74,85 @@ export class GestionHabilitationComponent implements OnInit {
     });
 
     habilitation_dialog.afterClosed().subscribe(result => {
+
       console.log(result);
+
+      if (result != false) {
+        let data: any = result;
+
+        console.log('====================================');
+        console.log(data);
+        console.log('====================================');
+
+        // test sur les valeur vides
+        if (data.description == '' || data.pass == '' || data.label == '') {
+          this.alert_message = "Tous les champs marqués (*) sont obligatoires";
+          this.alert_type = "warning";
+          this.closeAlert();
+          this.openAlert();
+        } else {
+
+          let user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
+
+          // if (data.pass == user.password) {
+          // on active la barre de progression
+          this.isProgressHidden = false;
+
+          try {
+            // on envoi la requete
+            let request = this.habilition.newEdit(data).subscribe(res => {
+
+              // on stope la barre de progression
+              this.isProgressHidden = true;
+
+              // si le code est egale a 0 alors tout s'est bien passe
+              console.log(res);
+
+              // on definit le type d'alerte a  afficher en fonction du code de retour
+              let res_code = res.code;
+              switch (+res_code) {
+                case 400:
+                  this.alert_type = 'warning';
+                  break;
+                case 200:
+                  this.alert_type = 'success';
+                  break;
+                case 500:
+                  this.alert_type = 'danger';
+                  break;
+                default:
+                  this.alert_type = 'info';
+                  break;
+              }
+              this.alert_message = res.data;
+              this.closeAlert();
+              this.openAlert();
+            });
+
+          } catch (error) {
+            // on descative la barre de progression
+            this.isProgressHidden = true;
+
+            // on notifie
+            const snackbar = this._snackBar.open("Une erreur est survenue: " + error, "Ok");
+            snackbar.onAction().subscribe(s => { snackbar.dismiss(); })
+          }
+          // } else {
+          //   // on notifie
+          //   const snackbar = this._snackBar.open("Mot de passe incorrect", "Ok");
+          //   snackbar.onAction().subscribe(s => { snackbar.dismiss(); })
+          // }
+        }
+      }
+
     });
 
   }
 
-
+  /**
+   * Supprimer un habilitation
+   * @param intitule
+   */
   supprimer_habilitation(intitule: string) {
     const confirmation_dialog = this.dialog.open(ConfirmationDialogComponent, {
       data: {
@@ -89,6 +166,9 @@ export class GestionHabilitationComponent implements OnInit {
     });
   }
 
+  /**
+   *
+   */
   show_information() {
     // const show_info_dialog = this.dialog.open(GestionMonnaieShowInformationDialogComponent, {
     //   data: {}
@@ -98,6 +178,10 @@ export class GestionHabilitationComponent implements OnInit {
     //   console.log(result);
     // });
   }
+
+  /**
+   * Au chargement de la page
+   */
   ngOnInit(): void {
     this.habilition.habilitations().subscribe(habi => {
 

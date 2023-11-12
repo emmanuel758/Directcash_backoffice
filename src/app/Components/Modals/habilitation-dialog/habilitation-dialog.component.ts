@@ -35,9 +35,13 @@ export class HabilitationDialogComponent {
   mode = this.datas.mode;
   valide() {
     console.log(this.data);
-    this.habilitationService.newEdit(this.data).subscribe(res => {
-      console.log(res);
-    })
+
+    // on retourne les donnes
+    return this.data;
+
+    // this.habilitationService.newEdit(this.data).subscribe(res => {
+    //   console.log(res);
+    // })
   }
 }
 
